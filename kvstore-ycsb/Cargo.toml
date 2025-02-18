@@ -12,7 +12,7 @@ xl710_intel = ["dpdk-direct?/xl710_intel"]
 
 [dependencies]
 bertha = { path = "../bertha" } 
-burrito-shard-ctl = { path = "../burrito-shard-ctl" }
+shard-ctl = { path = "../shard-ctl" }
 kvstore = { path = "../kvstore", features = ["bin-helper"] }
 futures-util = "0.3"
 structopt = "0.3"

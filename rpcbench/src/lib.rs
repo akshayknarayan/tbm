@@ -460,9 +460,9 @@ pub struct EncryptOpt {
 impl EncryptOpt {
     pub fn from(o: &impl AsEncryptOpt) -> Option<Self> {
         o.gt_root().as_ref().map(|gt| EncryptOpt {
-                ghostunnel_root: gt.clone(),
-                unix_root: o.unix_root(),
-            })
+            ghostunnel_root: gt.clone(),
+            unix_root: o.unix_root(),
+        })
     }
 
     pub fn unix_root(&self) -> PathBuf {
@@ -514,7 +514,7 @@ impl From<(SocketAddr, TlsConnAddr)> for TlsWrapAddr {
     }
 }
 
-impl burrito_localname_ctl::GetSockAddr for TlsWrapAddr {
+impl localname_ctl::GetSockAddr for TlsWrapAddr {
     fn as_sk_addr(&self) -> SocketAddr {
         self.0
     }
@@ -544,8 +544,8 @@ mod test {
         util::ProjectLeft,
         ChunnelConnector, ChunnelListener, CxList,
     };
-    use burrito_localname_ctl::{ctl::serve_ctl, LocalNameChunnel};
     use color_eyre::eyre::WrapErr;
+    use localname_ctl::{ctl::serve_ctl, LocalNameChunnel};
     use std::net::SocketAddr;
     use std::path::PathBuf;
     use tracing::{info, info_span, instrument};

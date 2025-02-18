@@ -2,8 +2,8 @@ use bertha::{
     bincode::SerializeChunnelProject, either::Either, negotiate_client, udp::UdpSkChunnel,
     uds::UnixSkChunnel, util::ProjectLeft, ChunnelConnector, ClientNegotiator, CxList,
 };
-use burrito_localname_ctl::{EitherAddr, MicroserviceChunnel, MicroserviceTLSChunnel};
 use color_eyre::eyre::{bail, Report, WrapErr};
+use localname_ctl::{EitherAddr, MicroserviceChunnel, MicroserviceTLSChunnel};
 use rpcbench::{EncryptOpt, TlsWrapAddr};
 use std::net::SocketAddr;
 use std::path::PathBuf;

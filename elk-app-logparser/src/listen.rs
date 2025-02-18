@@ -22,12 +22,12 @@ use bertha::{
     util::{Nothing, ProjectLeft},
     ChunnelConnection, ChunnelListener, CxList, Either, Select, StackNonce,
 };
-use burrito_localname_ctl::LocalNameChunnel;
-use burrito_shard_ctl::ShardInfo;
 use color_eyre::eyre::{Report, WrapErr};
 use futures_util::{stream::TryStreamExt, Stream};
+use localname_ctl::LocalNameChunnel;
 use rcgen::Certificate;
 use rustls::PrivateKey;
+use shard_ctl::ShardInfo;
 use tcp::{Connected, TcpChunnelWrapServer};
 use tls_tunnel::rustls::TLSChunnel;
 use tokio::runtime::Runtime;
@@ -369,7 +369,7 @@ async fn serve_canonical(
         unreachable!()
     }
 
-    let cnsrv = burrito_shard_ctl::ShardCanonicalServer::new(
+    let cnsrv = shard_ctl::ShardCanonicalServer::new(
         si.clone(),
         None,
         internal_cli,

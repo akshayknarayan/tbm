@@ -1,5 +1,5 @@
-use burrito_localname_ctl::ctl;
 use color_eyre::eyre::Error;
+use localname_ctl::ctl;
 use structopt::StructOpt;
 use tracing_error::ErrorLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};

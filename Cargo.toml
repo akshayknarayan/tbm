@@ -3,8 +3,8 @@ resolver = "2"
 members = [
     "bertha",
     "shenango-bertha",
-    "burrito-localname-ctl",
-    "burrito-shard-ctl",
+    "localname-ctl",
+    "shard-ctl",
     "kvstore",
     "kvstore-ycsb",
     "rpcbench",

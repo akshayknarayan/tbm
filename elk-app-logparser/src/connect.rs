@@ -17,10 +17,10 @@ use bertha::{
     util::{Nothing, ProjectLeft},
     ChunnelConnection, ChunnelConnector, CxList, Either, Select,
 };
-use burrito_localname_ctl::LocalNameChunnel;
-use burrito_shard_ctl::ClientShardChunnelClient;
 use color_eyre::eyre::{Report, WrapErr};
+use localname_ctl::LocalNameChunnel;
 use rustls::{ClientConfig, RootCertStore, ServerName};
+use shard_ctl::ClientShardChunnelClient;
 use tcp::{ConnectChunnel, TcpChunnelWrapClient};
 use tls_tunnel::rustls::TLSChunnel;
 use tracing::debug;

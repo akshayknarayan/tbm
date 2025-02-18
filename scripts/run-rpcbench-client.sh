@@ -13,7 +13,7 @@ if [[ $6 != "none" ]]; then
 fi
 
 RLOG="info"
-#RLOG="info,rpcbench=trace,bertha=trace,tls_tunnel=trace,burrito_localname_ctl=trace"
+#RLOG="info,rpcbench=trace,bertha=trace,tls_tunnel=trace,localname_ctl=trace"
 
 # 1 = outdir, 2 = addr, 3 = i, 4 = reqs-per-iter, 5 = outfile, 6 = encr, 7 = burrito-root
 if [[ $2 =~ ":" ]]; then 

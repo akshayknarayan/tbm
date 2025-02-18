@@ -8,14 +8,14 @@ edition = "2021"
 default = []
 bin = ["bin-helper", "structopt", "tokio/rt-multi-thread", "tokio/fs", "num_cpus"]
 bin-helper = ["tracing-subscriber", "tracing-timing", "ctrlc"]
-ebpf = ["burrito-shard-ctl/ebpf"]
+ebpf = ["shard-ctl/ebpf"]
 cx3_mlx = ["dpdk-direct?/cx3_mlx"]
 cx4_mlx = ["dpdk-direct?/cx4_mlx"]
 xl710_intel = ["dpdk-direct?/xl710_intel"]
 
 [dependencies]
 bertha = { path = "../bertha" }
-burrito-shard-ctl = { path = "../burrito-shard-ctl" }
+shard-ctl = { path = "../shard-ctl" }
 color-eyre = "0.6"
 futures-util = "0.3"
 and-then-concurrent = "0.1"

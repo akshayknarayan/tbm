@@ -91,7 +91,7 @@ impl bertha::util::MsgId for Msg {
     }
 }
 
-impl burrito_shard_ctl::Kv for Msg {
+impl shard_ctl::Kv for Msg {
     type Key = String;
     fn key(&self) -> Self::Key {
         self.key().into()

@@ -8,7 +8,7 @@
 //    tagger::OrderedChunnelProj,
 //    CxList, CxNil, Select,
 //};
-//use burrito_shard_ctl::{ShardCanonicalServer, ShardCanonicalServerRaw};
+//use shard_ctl::{ShardCanonicalServer, ShardCanonicalServerRaw};
 
 /// Optimization to inject ShardCanonicalServerRaw
 pub trait SerdeOpt {
@@ -17,7 +17,7 @@ pub trait SerdeOpt {
 }
 
 // optimization case:
-//    let cnsrv = burrito_shard_ctl::ShardCanonicalServer::new(
+//    let cnsrv = shard_ctl::ShardCanonicalServer::new(
 //        si.clone(),
 //        Some(shards_internal),
 //        udp_to_shard::UdpToShard(shard_connector),
@@ -48,7 +48,7 @@ pub trait SerdeOpt {
 //          kvstore::reliability::KvReliabilityServerChunnel,
 //          bertha::either::DataEither<bertha::reliable::Pkt<kvstore::msg::Msg>, kvstore::msg::Msg>
 //      >,
-//      bertha::CxList<burrito_shard_ctl::ShardCanonicalServer<
+//      bertha::CxList<shard_ctl::ShardCanonicalServer<
 //          std::net::addr::SocketAddr,
 //          ...
 //      >,
@@ -64,7 +64,7 @@ pub trait SerdeOpt {
 //          bertha::CxList<bertha::bincode::SerializeChunnelProject<kvstore::msg::Msg>,
 //              bertha::CxList<kvstore::reliability::KvReliabilityServerChunnel, bertha::CxNil>>
 //      >,
-//      bertha::CxList<burrito_shard_ctl::ShardCanonicalServer<std::net::addr::SocketAddr, ...>,
+//      bertha::CxList<shard_ctl::ShardCanonicalServer<std::net::addr::SocketAddr, ...>,
 //      bertha::CxNil>>
 //  >
 //

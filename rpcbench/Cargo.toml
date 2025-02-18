@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 bertha = { path = "../bertha" }
-burrito-localname-ctl = { path = "../burrito-localname-ctl", features = ["ctl"] }
+localname-ctl = { path = "../localname-ctl", features = ["ctl"] }
 tls-tunnel = { path = "../tls-tunnel" }
 serde = "1"
 bincode = "1"

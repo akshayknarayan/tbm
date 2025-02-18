@@ -6,9 +6,9 @@ use bertha::{
     bincode::SerializeChunnel, chan_transport::RendezvousChannel, negotiate::StackNonce,
     ChunnelConnection, ChunnelListener, CxList,
 };
-use burrito_shard_ctl::ShardInfo;
 use color_eyre::eyre::{Report, WrapErr};
 use futures_util::stream::{Stream, TryStreamExt};
+use shard_ctl::ShardInfo;
 use std::net::{IpAddr, SocketAddr};
 use std::sync::{
     atomic::{AtomicUsize, Ordering},
@@ -182,7 +182,7 @@ async fn serve_canonical(
         CxList::from(KvReliabilityServerChunnel::default()).wrap(SerializeChunnel::default());
 
     #[cfg(not(feature = "ebpf"))]
-    let cnsrv = burrito_shard_ctl::ShardCanonicalServer::new(
+    let cnsrv = shard_ctl::ShardCanonicalServer::new(
         si.clone(),
         None,
         internal_cli,
@@ -194,7 +194,7 @@ async fn serve_canonical(
     .wrap_err("Create ShardCanonicalServer")?;
 
     #[cfg(feature = "ebpf")]
-    let cnsrv = burrito_shard_ctl::ShardCanonicalServerEbpf::new(
+    let cnsrv = shard_ctl::ShardCanonicalServerEbpf::new(
         si.clone(),
         None,
         internal_cli,

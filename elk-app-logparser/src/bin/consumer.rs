@@ -112,7 +112,7 @@ impl ProcessLine<EstOutputRateHist> for Process {
 #[instrument(level = "info", skip(opt))]
 async fn consumer(opt: Opt) -> Result<(), Report> {
     if let Some(lr) = opt.local_root.as_ref() {
-        tokio::spawn(burrito_localname_ctl::ctl::serve_ctl(lr.clone(), true));
+        tokio::spawn(localname_ctl::ctl::serve_ctl(lr.clone(), true));
     }
 
     info!(?opt, "starting consumer");

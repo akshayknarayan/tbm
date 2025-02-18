@@ -9,12 +9,12 @@ queue-steer = { path = "../queue-steer"  }
 gcp-pubsub = { path = "../gcp-pubsub" }
 kafka = { path = "../kafka" }
 redis-basechunnel = { path = "../redis-basechunnel" }
-burrito-shard-ctl = { path = "../burrito-shard-ctl" }
+shard-ctl = { path = "../shard-ctl" }
 quic-chunnel = { path = "../quic-chunnel" }
 tcp = { path = "../tcp" }
 common-log-format = { git = "https://github.com/akshayknarayan/common-log-format", branch = "main" }
 tls-tunnel = { path = "../tls-tunnel", features = ["rustls"] }
-burrito-localname-ctl = { path = "../burrito-localname-ctl", default-features=false, features = ["ctl", "runtime"] }
+localname-ctl = { path = "../localname-ctl", default-features=false, features = ["ctl", "runtime"] }
 rcgen = { version = "0.10.0", features = ["pem"] }
 tempfile = "3"
 rustls = { version = "0.21", features = ["dangerous_configuration"] }

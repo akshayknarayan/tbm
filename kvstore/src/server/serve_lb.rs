@@ -5,9 +5,9 @@ use bertha::{
     bincode::SerializeChunnel, ChunnelConnection, ChunnelConnector, ChunnelListener, CxList,
     GetOffers,
 };
-use burrito_shard_ctl::ShardInfo;
 use color_eyre::eyre::{Report, WrapErr};
 use futures_util::stream::TryStreamExt;
+use shard_ctl::ShardInfo;
 use std::net::SocketAddr;
 use std::sync::{atomic::AtomicUsize, Arc};
 use tracing::{debug_span, info, info_span, trace_span, warn};
@@ -94,7 +94,7 @@ pub async fn serve_lb(
     let mut offer: Vec<_> = shard_stack.offers().collect();
     let redis_addr = format!("redis://{}:{}", redis_addr.ip(), redis_addr.port());
 
-    let cnsrv = burrito_shard_ctl::ShardCanonicalServer::<_, _, _, (SocketAddr, Msg)>::new(
+    let cnsrv = shard_ctl::ShardCanonicalServer::<_, _, _, (SocketAddr, Msg)>::new(
         si.clone(),
         Some(shards_internal),
         UdpToShard::new(shard_connector),
@@ -108,7 +108,7 @@ pub async fn serve_lb(
     if opt {
         //use crate::opt::SerdeOpt;
         //let external = external.serde_opt();
-        let cnsrv = burrito_shard_ctl::ShardCanonicalServerRaw::<_, _, _, _, 18>::from(cnsrv);
+        let cnsrv = shard_ctl::ShardCanonicalServerRaw::<_, _, _, _, 18>::from(cnsrv);
         let external = CxList::from(cnsrv).wrap(KvReliabilityServerChunnel::default());
         serve!(raw_listener, si, external, ready)
     } else {

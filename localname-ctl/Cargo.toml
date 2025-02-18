@@ -1,5 +1,5 @@
 [package]
-name = "burrito-localname-ctl"
+name = "localname-ctl"
 version = "0.1.0"
 authors = ["Akshay Narayan <akshayn@mit.edu>"]
 edition = "2021"

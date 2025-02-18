@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 shenango = { path = "../shenango-chunnel/caladan/bindings/rust" }
 bertha = { path = "../bertha" }
-burrito-shard-ctl = { path = "../burrito-shard-ctl" }
+shard-ctl = { path = "../shard-ctl" }
 kvstore = { path = "../kvstore" }
 kvstore-ycsb = { path = "../kvstore-ycsb" }
 tracing = { version = "0.1" }

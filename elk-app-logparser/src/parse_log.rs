@@ -10,7 +10,6 @@ use std::{
 };
 
 use bertha::{Chunnel, ChunnelConnection, Negotiate};
-use burrito_shard_ctl::Kv;
 use chrono::{DateTime, Duration, Utc};
 use color_eyre::{eyre::bail, Report};
 use common_log_format::LogEntry;
@@ -19,6 +18,7 @@ use hdrhistogram::{
     serialization::{Deserializer, Serializer, V2Serializer},
     Histogram,
 };
+use shard_ctl::Kv;
 use tracing::{debug, trace, warn};
 
 #[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]

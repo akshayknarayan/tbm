@@ -5,8 +5,8 @@ use bertha::{
     uds::{UnixReqChunnel, UnixSkChunnel},
     ChunnelListener, CxList,
 };
-use burrito_localname_ctl::{MicroserviceChunnel, MicroserviceTLSChunnel};
 use color_eyre::eyre::{bail, eyre, Report, WrapErr};
+use localname_ctl::{MicroserviceChunnel, MicroserviceTLSChunnel};
 use rpcbench::{EncryptOpt, TlsWrapAddr};
 use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 use std::path::PathBuf;

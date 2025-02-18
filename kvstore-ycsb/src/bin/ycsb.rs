@@ -198,7 +198,7 @@ fn do_exp(
                             .connect(opt.addr)
                             .await
                             .map_err(Into::into)?,
-                        burrito_shard_ctl::ShardInfo {
+                        shard_ctl::ShardInfo {
                             canonical_addr: opt.addr,
                             shard_addrs: shards
                                 .iter()
@@ -252,7 +252,7 @@ fn do_exp(
                 KvClientBuilder::new(opt.addr)
                     .new_fiat_client(
                         ctr.connect(opt.addr).await.map_err(Into::into)?,
-                        burrito_shard_ctl::ShardInfo {
+                        shard_ctl::ShardInfo {
                             canonical_addr: opt.addr,
                             shard_addrs: shard_ports
                                 .clone()

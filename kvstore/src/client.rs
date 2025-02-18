@@ -9,8 +9,8 @@ use bertha::{
     util::{MsgIdMatcher, NeverCn, Nothing},
     ChunnelConnection, CxList,
 };
-use burrito_shard_ctl::ClientShardChunnelClient;
 use color_eyre::eyre::{eyre, Report, WrapErr};
+use shard_ctl::ClientShardChunnelClient;
 use std::net::SocketAddr;
 use std::pin::Pin;
 use tracing::{debug, debug_span, instrument, trace};
@@ -44,7 +44,7 @@ macro_rules! shardcl {
         let cl = ClientShardChunnelClient::new($ca, &redis_addr).await?;
         let stack = CxList::from(Select::from((
             cl,
-            Nothing::<burrito_shard_ctl::ShardFns>::default(),
+            Nothing::<shard_ctl::ShardFns>::default(),
         )))
         .wrap($sel);
         debug!("negotiation");
@@ -82,10 +82,10 @@ impl KvClientBuilder {
     pub async fn new_fiat_client(
         self,
         raw_cn: impl ChunnelConnection<Data = (SocketAddr, Vec<u8>)> + Send + Sync + 'static,
-        si: burrito_shard_ctl::ShardInfo<SocketAddr>,
+        si: shard_ctl::ShardInfo<SocketAddr>,
     ) -> Result<KvClient<impl ChunnelConnection<Data = Msg> + Send + Sync + 'static>, Report> {
         use bertha::Chunnel;
-        let cl = burrito_shard_ctl::static_client::ClientShardChunnelClient::new(si);
+        let cl = shard_ctl::static_client::ClientShardChunnelClient::new(si);
         let mut stack = CxList::from(cl)
             .wrap(KvReliabilityChunnel::default())
             .wrap(SerializeChunnel::default());
