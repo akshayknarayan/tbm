@@ -5,12 +5,11 @@ authors = ["Akshay Narayan <akshayn@mit.edu>"]
 edition = "2021"
 
 [features]
-default = ["runtime", "conntime"]
+default = ["runtime"]
 ctl = ["tokio/rt-multi-thread", "tokio-stream", "tokio-stream", "ctrlc", "structopt", "rand", "tracing-subscriber", "tracing-error", "tracing-futures"]
 rustls = ["tls-tunnel", "tls-tunnel/rustls"]
 ghostunnel = ["tls-tunnel", "tls-tunnel/ghostunnel"]
 runtime = []
-conntime = []
 
 [dependencies]
 bertha = { path = "../bertha" }

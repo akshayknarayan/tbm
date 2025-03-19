@@ -32,11 +32,6 @@ mod runtime_fastpath;
 #[cfg(feature = "runtime")]
 pub use runtime_fastpath::*;
 
-#[cfg(feature = "conntime")]
-mod static_fastpath;
-#[cfg(feature = "conntime")]
-pub use static_fastpath::*;
-
 #[cfg(feature = "tls-tunnel")]
 mod fused_tls_fastpath;
 #[cfg(feature = "tls-tunnel")]
