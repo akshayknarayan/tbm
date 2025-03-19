@@ -2,18 +2,7 @@
 resolver = "2"
 members = [
     "bertha",
-    "shenango-bertha",
-    "localname-ctl",
     "shard-ctl",
-    "kvstore",
-    "kvstore-ycsb",
-    "rpcbench",
-    "shenango-chunnel",
-    "dpdk-direct",
-    "kv-dpdk",
-    "test-util",
-    "xdp-shard",
-    "az-queues",
     "gcp-pubsub",
     "sqs",
     "kafka",
@@ -22,11 +11,6 @@ members = [
     "tls-tunnel",
     "tcp",
     "quic-chunnel",
-    "negotiation-bench",
-    "latency-bench",
-    "throughput-bench",
-    "cx-list-opt",
-    "cx-list-opt-test",
     "elk-app-logparser",
 ]
 
