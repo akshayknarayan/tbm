@@ -6,11 +6,9 @@ edition = "2021"
 
 [features]
 default = []
-ebpf = ["xdp-shard/ebpf"]
 
 [dependencies]
 bertha = { path = "../bertha" }
-xdp-shard = { path = "../xdp-shard", optional = true }
 color-eyre = "0.6"
 bincode = "1"
 tracing = "0.1"

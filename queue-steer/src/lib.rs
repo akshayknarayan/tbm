@@ -15,10 +15,6 @@ pub mod bin_help;
 mod aws;
 #[cfg(feature = "sqs")]
 pub use aws::{BatchSqsChunnelWrap, OrderedSqsChunnelWrap, SqsChunnelWrap};
-#[cfg(feature = "azure")]
-mod azure;
-#[cfg(feature = "azure")]
-pub use azure::AzQueueChunnelWrap;
 mod set_group;
 pub use set_group::{FakeSetGroup, FakeSetGroupAddr, FakeSetGroupCn, SetGroup};
 

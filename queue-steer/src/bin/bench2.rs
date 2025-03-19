@@ -4,7 +4,6 @@
 //! The chunnel stacks it benchmarks should support the (addr, data) = (impl SetGroup, String)
 //! datatype.
 
-use az_queues::{AsStorageClient, AzStorageQueueChunnel};
 use bertha::{
     bincode::{Base64Chunnel, SerializeChunnelProject},
     Chunnel, CxList,
@@ -19,7 +18,7 @@ use queue_steer::bin_help::{
     do_ordered_groups_exp, do_ordered_groups_exp_batch, dump_results, Mode, RecvdMsg,
 };
 use queue_steer::{
-    AtMostOnce, AzQueueChunnelWrap, BatchSqsChunnelWrap, GcpPubSubWrap, KafkaChunnelWrap, Ordered,
+    AtMostOnce, BatchSqsChunnelWrap, GcpPubSubWrap, KafkaChunnelWrap, Ordered,
     OrderedGcpPubSubWrap, OrderedSqsChunnelWrap, SqsChunnelWrap,
 };
 use sqs::{SqsAddr, SqsChunnel, SqsChunnelBatch};
@@ -85,12 +84,6 @@ pub enum Provider {
         #[structopt(long)]
         aws_secret_access_key: String,
     },
-    Azure {
-        #[structopt(long)]
-        az_account_name: String,
-        #[structopt(long)]
-        az_key: String,
-    },
     Gcp {
         #[structopt(long)]
         gcp_key_file: std::path::PathBuf,
@@ -107,7 +100,6 @@ impl std::fmt::Debug for Provider {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Aws { .. } => f.debug_struct("Aws").finish(),
-            Self::Azure { .. } => f.debug_struct("Azure").finish(),
             Self::Gcp { .. } => f.debug_struct("Gcp").finish(),
             Self::Kafka { addr } => f.debug_struct("Kafka").field("addr", addr).finish(),
         }
@@ -191,7 +183,6 @@ impl Provider {
     pub fn provider(&self) -> &str {
         match self {
             Provider::Aws { .. } => "aws",
-            Provider::Azure { .. } => "azure",
             Provider::Gcp { .. } => "gcp",
             Provider::Kafka { .. } => "kafka",
         }
@@ -525,40 +516,6 @@ impl Provider {
                 }
                 Ok((msgs, elapsed))
             }
-            Azure {
-                az_account_name,
-                az_key,
-            } => {
-                if service_mode {
-                    debug!("skipping service-mode Azure");
-                    return Ok((vec![], Duration::from_millis(0)));
-                }
-
-                let az_client = az_queues::AzureAccountBuilder::default()
-                    .with_name(az_account_name)
-                    .with_key(az_key)
-                    .finish()?;
-
-                let generated: Option<ProviderCleanup> = if generated {
-                    az_queues::make_queue(&az_client.as_storage_client(), queue.clone()).await?;
-                    Some((queue.clone(), az_client.as_storage_client()).into())
-                } else {
-                    None
-                };
-
-                use queue_steer::{FakeSetGroup, FakeSetGroupAddr};
-                debug!(?queue, "Azure queue");
-                let cn: AzQueueChunnelWrap =
-                    AzStorageQueueChunnel::new(az_client, once(queue.as_str())).into();
-                let cn = CxList::from(FakeSetGroup::default()).wrap(cn);
-                let addr: FakeSetGroupAddr = queue.into();
-                let (msgs, elapsed) =
-                    do_exp!(mode, cn, addr, num_reqs, inter_request_ms, num_receivers);
-                if let Some(gen) = generated {
-                    gen.cleanup().await?;
-                }
-                Ok((msgs, elapsed))
-            }
             Kafka { addr } => {
                 kafka::make_topic(&addr, &queue).await?;
                 info!(?queue, ?addr, "Kafka queue");
@@ -634,7 +591,6 @@ impl ProviderCleanup {
         debug!(?queue, provider = ?self.inner.provider(), "deleting queue");
         match self.inner {
             Aws(c) => sqs::delete_queue(&c, queue).await,
-            Azure(c) => az_queues::delete_queue(&c, queue).await,
             Gcp(mut c) => gcp_pubsub::delete_topic(&mut c, queue).await,
         }
     }
@@ -645,14 +601,6 @@ impl From<(String, sqs::SqsClient)> for ProviderCleanup {
         Self {
             queue,
             inner: ProviderCleanupInner::Aws(inner),
-        }
-    }
-}
-impl From<(String, Arc<az_queues::StorageClient>)> for ProviderCleanup {
-    fn from((queue, inner): (String, Arc<az_queues::StorageClient>)) -> Self {
-        Self {
-            queue,
-            inner: ProviderCleanupInner::Azure(inner),
         }
     }
 }
@@ -667,7 +615,6 @@ impl From<(String, gcp_pubsub::GcpClient)> for ProviderCleanup {
 
 enum ProviderCleanupInner {
     Aws(sqs::SqsClient),
-    Azure(Arc<az_queues::StorageClient>),
     Gcp(gcp_pubsub::GcpClient),
 }
 
@@ -675,7 +622,6 @@ impl ProviderCleanupInner {
     fn provider(&self) -> &str {
         match self {
             ProviderCleanupInner::Aws(_) => "aws",
-            ProviderCleanupInner::Azure(_) => "azure",
             ProviderCleanupInner::Gcp(_) => "gcp",
         }
     }

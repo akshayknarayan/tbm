@@ -6,12 +6,10 @@ edition = "2021"
 
 [features]
 bin = ["structopt", "tracing-subscriber", "tracing-error", "redis-basechunnel"]
-azure = ["az-queues"]
 
 [dependencies]
 bertha = { path = "../bertha" }
 sqs = { path = "../sqs", optional = true }
-az-queues = { path = "../az-queues", optional = true }
 redis-basechunnel = { path = "../redis-basechunnel" , optional = true }
 futures-util = "0.3"
 base64 = "0.13"
